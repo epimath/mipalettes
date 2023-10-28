@@ -1,0 +1,92 @@
+---
+title: "mipalettes"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## mipalettes
+
+Mipalettes is an R package for color palettes related to MI Umbrella and other pandemic response projects. They include color schemes from MI Start Map, MI Lighthouse, and various COVID levels. It was mostly meant as a self tutorial on how to make a package (following Hilary Parker's [excellent super-simple intro](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/)) and is largely just a riff on Kartik Ram's [wesanderson color palettes package](https://github.com/karthik/wesanderson/tree/master). 
+
+## Installation
+
+Install from GitHub using devtools:
+
+```{r install, eval=FALSE}
+devtools::install_github("epimath/mipalettes")
+```
+
+
+## Example plots
+
+```{r plots, warning=FALSE}
+library("mipalettes")
+library("ggplot2")
+
+ggplot(mtcars, aes(factor(cyl), fill=factor(carb))) +  geom_bar() +
+  scale_fill_manual(values = mipalette("MIStartMap"))
+
+ggplot(Indometh, aes(x = time, y = conc, color = Subject)) + geom_line(size = 1) + 
+  scale_color_manual(values = mipalette("MISafeStart"))
+
+ggplot(mtcars, aes(factor(cyl), fill=factor(gear))) +  geom_bar() +
+  scale_fill_manual(values = mipalette("CDCCommunityLevels"))
+
+ggplot(Theoph, aes(x = Time, y = conc, color = Subject)) + geom_line(size = 1) + 
+  scale_color_manual(values = mipalette("SunForest6", n = length(unique(Theoph$Subject)), type = "continuous"))
+
+ggplot(faithfuld, aes(waiting, eruptions, z = density)) + geom_contour_filled() + 
+  scale_fill_manual(values = mipalette("MILighthouse", n = 9, type = "continuous"))
+```
+
+## All palettes
+```{r palettes, warning=FALSE, fig.height = 1}
+# All palettes
+names(mipalettes)
+```
+
+#### MI Safe Start and MI Start Map Palettes
+```{r palettes2, warning=FALSE, fig.height = 1}
+mipalette("MIStartMap")
+mipalette("OldMIStartMap")
+mipalette("MISafeStart")
+mipalette("MISMTransmissionLevels")
+mipalette("MISMCommunityLevels")
+mipalette("MISMTequilaSunrise")
+```
+
+#### MI Lighthouse
+```{r palettes3, warning=FALSE, fig.height = 1}
+mipalette("MILighthouse")
+mipalette("MILighthouseSVI")
+```
+
+#### Dear Epi
+```{r palettes4, warning=FALSE, fig.height = 1}
+mipalette("DearEpi")
+```
+
+#### UM, State, and CDC
+```{r palettes5, warning=FALSE, fig.height = 1}
+mipalette("CDCTransmissionLevels")
+mipalette("CDCCommunityLevels")
+mipalette("SoM")
+mipalette("USRegionalTrends") # makes US HHS regions break into West coast/East coast/etc by color group (reorderd here to look nicer though)
+mipalette("UMSecondaryColors")
+```
+
+#### Miscellaneous
+```{r palettes6, warning=FALSE, fig.height = 1}
+mipalette("RetroRainbow")
+mipalette("RetroRainbow2")
+mipalette("SunForest6")
+mipalette("BeachBall")
+mipalette("GreyTealGold")
+mipalette("BigTop")
+mipalette("BigTop2")
+mipalette("Midsummer")
+mipalette("SummerHike")
+```
